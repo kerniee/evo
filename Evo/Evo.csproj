@@ -8,6 +8,10 @@
         <LangVersion>latest</LangVersion>
         <Configurations>Debug;Release</Configurations>
         <Platforms>AnyCPU</Platforms>
+        <PublishSingleFile>true</PublishSingleFile>
+        <SelfContained>true</SelfContained>
+        <PublishTrimmed>true</PublishTrimmed>
+        <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
     </PropertyGroup>
 
     <ItemGroup>
