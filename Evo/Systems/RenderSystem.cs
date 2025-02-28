@@ -1,6 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using Arch.Core;
 using Arch.System;
+using Arch.System.SourceGenerator;
 using Evo.Components;
 using Evo.Extends;
 using Raylib_cs;
@@ -15,17 +16,35 @@ public partial class RenderSystem(World world) : BaseSystem<World, float>(world)
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void DrawEntities(ref Position pos)
     {
-        var x = (int)pos.Value.X;
-        var y = (int)pos.Value.Y;
-        Raylib.DrawCircle(x, y, 10, _bodyColor);
-        Raylib.DrawCircleLines(x, y, 11, Color.Black);
+        var camera = World.GetSingleton<Camera2D>();
+        Raylib.BeginMode2D(camera);
+
+        Raylib.DrawCircleV(pos.Value, 10, _bodyColor);
+        Raylib.DrawCircleLinesV(pos.Value, 10, Color.Black);
+
+        Raylib.EndMode2D();
+    }
+
+    [Query]
+    [All<Position, Velocity, Head>]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private void DrawEntitiesHead(ref Position pos, ref Velocity vel)
+    {
+        var camera = World.GetSingleton<Camera2D>();
+        Raylib.BeginMode2D(camera);
+
+        var direction = vel.Value.Norm() * 5;
+        Raylib.DrawCircleV(pos.Value + direction, 2, Color.Black);
+
+        Raylib.EndMode2D();
     }
 
     public override void Initialize()
     {
         base.Initialize();
+        Raylib.SetConfigFlags(ConfigFlags.UndecoratedWindow | ConfigFlags.HighDpiWindow);
         Raylib.InitWindow(800, 600, "Snake Game");
-        Raylib.SetTargetFPS(60);
+        // Raylib.SetTargetFPS(60);
     }
 
     public override void BeforeUpdate(in float t)
@@ -33,8 +52,6 @@ public partial class RenderSystem(World world) : BaseSystem<World, float>(world)
         base.BeforeUpdate(in t);
         Raylib.BeginDrawing();
         Raylib.ClearBackground(Color.White);
-
-        RaylibExt.DrawTextXCentered("Snaky Snake", 12, 20, Color.Black);
     }
 
     public override void AfterUpdate(in float t)

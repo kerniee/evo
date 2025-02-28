@@ -22,7 +22,8 @@ public partial class InputSystem(World world) : BaseSystem<World, float>(world)
     [All<Head, Position, Velocity>]
     private void HeadMovement(ref Position pos, ref Velocity vel)
     {
-        var mousePos = Raylib.GetMousePosition();
+        ref var camera = ref World.GetSingleton<Camera2D>();
+        var mousePos = Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), camera);
         var direction = mousePos - pos.Value;
 
         if (!(direction.Length() > 1f))

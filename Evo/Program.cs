@@ -46,13 +46,21 @@ internal static class Program
             "Systems",
             new InputSystem(world),
             new MovementSystem(world),
-            new RenderSystem(world)
+            new CameraSystem(world),
+            new RenderSystem(world),
+            new UiSystem(world),
+            new DebugSystem(world)
         );
 
+        world.CreateSingleton(new Camera2D(
+            Vector2.Zero,
+            new Vector2(),
+            0,
+            1
+        ));
         systems.Initialize();
 
         CreateSnake(world, new Vector2(100, 100));
-        CreateSnake(world, new Vector2(500, 300));
 
         while (IsRunning(world))
         {

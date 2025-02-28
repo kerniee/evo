@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿global using Camera2D = Raylib_cs.Camera2D;
+using System.Numerics;
 using Arch.Core;
 
 namespace Evo.Components;

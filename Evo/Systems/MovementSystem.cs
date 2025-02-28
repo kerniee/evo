@@ -8,12 +8,13 @@ namespace Evo.Systems;
 public partial class MovementSystem(World world) : BaseSystem<World, float>(world)
 {
     private const float Stiffness = 10f;
+    private const float Speed = 80f;
 
     [Query]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private void MoveEntity(ref Position pos, ref Velocity vel)
+    private void MoveEntity([Data] in float deltaTime, ref Position pos, ref Velocity vel)
     {
-        pos.Value += vel.Value;
+        pos.Value += vel.Value * deltaTime * Speed;
     }
 
     [Query]
