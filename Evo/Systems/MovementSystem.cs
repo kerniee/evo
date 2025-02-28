@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Numerics;
+using System.Runtime.CompilerServices;
 using Arch.Core;
 using Arch.System;
 using Evo.Components;
@@ -14,7 +15,7 @@ public partial class MovementSystem(World world) : BaseSystem<World, float>(worl
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void MoveEntity([Data] in float deltaTime, ref Position pos, ref Velocity vel)
     {
-        pos.Value += vel.Value * deltaTime * Speed;
+        pos.V += vel.V * deltaTime * Speed;
     }
 
     [Query]
@@ -22,15 +23,13 @@ public partial class MovementSystem(World world) : BaseSystem<World, float>(worl
     private void FollowEntity([Data] in float deltaTime, ref Position pos, ref Follow follow)
     {
         if (!World.TryGet(follow.Previous, out Position previousPos)) return;
-        var p0 = previousPos.Value; // Leader's position
-        var p1 = pos.Value; // Current part's position
-        var v = p0 - p1; // Vector from current to leader
+        var v = previousPos.V - pos.V; // Vector from current to leader
         var dist = v.Length();
 
         if (!(dist > 1f)) return; // Avoid division by zero or tiny vectors
         var direction = v / dist;
-        var target = p0 - direction * follow.Distance;
-        var delta = (target - p1) * Stiffness * deltaTime;
-        pos.Value += delta;
+        var target = previousPos.V - direction * follow.Distance;
+        var delta = (target - pos.V) * Stiffness * deltaTime;
+        pos.V += delta;
     }
 }

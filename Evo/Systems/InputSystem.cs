@@ -24,16 +24,16 @@ public partial class InputSystem(World world) : BaseSystem<World, float>(world)
     {
         ref var camera = ref World.GetSingleton<Camera2D>();
         var mousePos = Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), camera);
-        var direction = mousePos - pos.Value;
+        var direction = mousePos - pos.V;
 
         if (!(direction.Length() > 1f))
         {
-            vel.Value = Vector2.Zero;
+            vel.V = Vector2.Zero;
             return;
         }
 
-        vel.Value = direction / direction.Length();
+        vel.V = direction / direction.Length();
 
-        if (Raylib.IsMouseButtonDown(MouseButton.Left)) vel.Value *= 3;
+        if (Raylib.IsMouseButtonDown(MouseButton.Left)) vel.V *= 3;
     }
 }

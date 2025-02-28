@@ -10,12 +10,12 @@ public record struct Head;
 
 public record struct Position
 {
-    public Vector2 Value;
+    public Vector2 V;
 }
 
 public record struct Velocity
 {
-    public Vector2 Value;
+    public Vector2 V;
 }
 
 public record struct Follow

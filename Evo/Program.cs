@@ -17,8 +17,8 @@ internal static class Program
     private static void CreateSnake(World world, Vector2 startPos)
     {
         var head = world.Create(
-            new Position { Value = startPos },
-            new Velocity { Value = new Vector2(1, 0) },
+            new Position { V = startPos },
+            new Velocity { V = new Vector2(1, 0) },
             new Head()
         );
 
@@ -27,7 +27,7 @@ internal static class Program
         for (var i = 1; i < 10; i++)
         {
             var body = world.Create(
-                new Position { Value = new Vector2(-i * DistanceBetweenParts, 0) },
+                new Position { V = new Vector2(-i * DistanceBetweenParts, 0) },
                 new Follow { Previous = previous, Distance = DistanceBetweenParts }
             );
             previous = body;

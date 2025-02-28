@@ -19,8 +19,8 @@ public partial class RenderSystem(World world) : BaseSystem<World, float>(world)
         var camera = World.GetSingleton<Camera2D>();
         Raylib.BeginMode2D(camera);
 
-        Raylib.DrawCircleV(pos.Value, 10, _bodyColor);
-        Raylib.DrawCircleLinesV(pos.Value, 10, Color.Black);
+        Raylib.DrawCircleV(pos.V, 10, _bodyColor);
+        Raylib.DrawCircleLinesV(pos.V, 10, Color.Black);
 
         Raylib.EndMode2D();
     }
@@ -33,8 +33,8 @@ public partial class RenderSystem(World world) : BaseSystem<World, float>(world)
         var camera = World.GetSingleton<Camera2D>();
         Raylib.BeginMode2D(camera);
 
-        var direction = vel.Value.Norm() * 5;
-        Raylib.DrawCircleV(pos.Value + direction, 2, Color.Black);
+        var direction = vel.V.Norm() * 5;
+        Raylib.DrawCircleV(pos.V + direction, 2, Color.Black);
 
         Raylib.EndMode2D();
     }

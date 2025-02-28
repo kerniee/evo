@@ -16,6 +16,6 @@ public partial class CameraSystem(World world) : BaseSystem<World, float>(world)
         ref var camera = ref World.GetSingleton<Camera2D>();
 
         camera.Offset = new Vector2(Raylib.GetScreenWidth() / 2f, Raylib.GetScreenHeight() / 2f);
-        camera.Target = pos.Value;
+        camera.Target = pos.V;
     }
 }
